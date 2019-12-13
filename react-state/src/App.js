@@ -2,7 +2,7 @@ import React from "react"
 import ListContacts from "./ListContacts"
 import PropTypes from "prop-types"
 import Counter from "./Counter"
-
+import CF from "./CF"
 // import List from "./list"
 // import Number from "./number"
 
@@ -85,9 +85,22 @@ class App extends React.Component{
       })
     }
 
+    //addContact 
+    addContact = (contact)=>{
+      console.log("inside add Contact", contact)
+      this.setState((prevState)=>({
+        contacts: [...prevState.contacts, contact]
+      }), ()=> console.log("after state change", this.state))
+    }
+
     render(){
       return(
         <div>
+          <h1>Add New Contact</h1>
+          <CF
+          addContact = {this.addContact}
+          />
+          <hr/>
           <ListContacts 
           contacts = {this.state.contacts}
           removeContact = {this.removeContact}

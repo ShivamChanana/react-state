@@ -7,7 +7,7 @@ class ListContacts extends React.Component{
         query: ""
     }
 
-    updateQuery = input =>{
+    updateQuery = (input) =>{
         console.log(input)
         this.setState({
             query: input.trim()
@@ -15,28 +15,32 @@ class ListContacts extends React.Component{
     }
 
     render(){
-        const showContacts = this.state.query === ""
-                                                ?this.props.contacts
-                                                :this.props.contacts.filter((contact)=>contact.name.toLowerCase().includes(this.state.query.toLowerCase()))
+        const {query} = this.state
+        const {contacts, removeContact} = this.props
+        const showContacts = query === ""
+                                                ?contacts
+                                                :contacts.filter((contact)=>contact.name.toLowerCase().includes(query.toLowerCase()))
 
         return(
 <div>
     <input placeholder = "search here"
-    value = {this.state.query}
+    value = {query}
     onChange = {(e)=>this.updateQuery(e.target.value)}
     />
         <h1>Contacts</h1>
+        {query !== "" &&
         <div>
-    <h2>Showing {showContacts.length} of {this.props.contacts.length} results</h2>
-        </div>
+    <h2>Showing {showContacts.length} of {contacts.length} results</h2>
+        </div>}
         {showContacts.map((list)=>(
             <li key = {list.id}>
                 {list.name}
-                <button onClick = {()=> this.props.removeContact(list)}>Remove</button>
+                <button onClick = {()=> removeContact(list)}>Remove</button>
             </li>
         ))}
     </div>
         )
+        
     }
 }
 
